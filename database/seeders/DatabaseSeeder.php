@@ -7,7 +7,7 @@ use App\Models\Admin;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
-{
+{//selenum 
     /**
      * Seed the application's database.
      */
@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         $admin = Admin::first();
 
         $this->command->info("Dummy Admin Created");
-        $this->command->info("Email: $admin->email");
+        // $this->command->info("Email: $admin->email");
+        $this->command->info("Email: jafrnqchr12@gmail.com");
         $this->command->info("Password: password");
 
         \App\Models\Product::factory(50)->create();
