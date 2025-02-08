@@ -1,61 +1,84 @@
 //@ts-check
-import {validEmail, validPassword, assertUrl, logIn } from './baseTest';
-import { test, expect} from '@playwright/test';
+// import { assertUrl, logIn } from './baseTest';
+// import { test, expect} from '@playwright/test';
+import { assertUrl, logIn, test, expect } from './baseTest';
 
-test("Login using valid credentials", async ({ page }) => {
-    console.log('Running test using valid credentials');
+
+
+test.describe('LoginPageTests', () => {
+    test.describe.configure({ mode: 'serial' });
+
+
     
-    await assertElementsVisibility(page);
-    await logIn(page);
+    test("Login using valid credentials", async ({ page }) => {
 
-    await page.locator('.sidebar .mt-2 ul li.nav-item:nth-of-type(7) a').click;
-});
+        console.log('Running test using valid credentials');
+        
+        await assertElementsVisibility(page);
+        
+        await logIn(page);
 
-
-test("Login using invalid credentials", async ({ page }) => {
-    await assertElementsVisibility(page);
-    await logIn(page, 'test123!@#@gmail.com', 'password123', 'no');
-});
-
-test("Login using empty fields", async ({ page }) => {
-    await assertElementsVisibility(page);
-    await logIn(page, '', '', 'no');
-});
-
-test("Test login with 'Remember me' on ", async ({ page }) => {
-    
-    await assertElementsVisibility(page);
-    await logIn(page, validEmail, validPassword, 'yes');
-
-    //refresh page and assert 
-
-    await page.reload();
-
-    //Should stay in product page 
-    try{
         await assertUrl(page, 'product');
-    } catch(error){
-        console.log("Error: " + error);
-    }
-});
 
-test("Test login with 'Remember me' off ", async ({ page }) => {
-    
-    await assertElementsVisibility(page);
-    await logIn(page, validEmail, validPassword, 'no');
+        // await page.locator('.sidebar .mt-2 ul li.nav-item:nth-of-type(7) a').click; //Click logout button
+    });
 
-    //refresh page and assert 
+    test("Login using invalid credentials", async ({ page }) => {
+        await assertElementsVisibility(page);
+        
+        await logIn(page, 'test123!@#@gmail.com', 'password123', 'no');
 
-    await page.reload();
-
-    //Should go back to login page 
-    try{
         await assertUrl(page, 'login');
-    } catch(error){
-        console.log("Error: " + error);
-    }
+
+    });
+
+    test("Login using empty fields", async ({ page }) => {
+        await assertElementsVisibility(page);
+
+        await logIn(page, '', '', 'no');
+
+        // await assertUrl(page, 'login');
+
+    });
+
+    test("Test login with 'Remember me' on ", async ({ page }) => {
+        
+        await assertElementsVisibility(page);
+        await logIn(page, 'yes');
+
+        //refresh page and assert 
+
+        await page.reload();
+
+        //Should stay in product page 
+        try{
+            await assertUrl(page, 'product');
+        } catch(error){
+            console.log("Error: " + error);
+        }
+    });
+
+    test("Test login with 'Remember me' off ", async ({ page }) => {
+        
+        await assertElementsVisibility(page);
+        await logIn(page, 'no');
+
+        //refresh page and assert 
+
+        await page.reload();
+
+        //Should go back to login page 
+        try{
+            await assertUrl(page, 'login');
+        } catch(error){
+            console.log("Error: " + error);
+        }
+
+    });
 
 });
+
+
 
 //Page specific HELPER METHODS
 async function assertElementsVisibility(page){

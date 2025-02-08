@@ -1,58 +1,89 @@
-import { expect, test as test } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 import type { Page, Locator } from '@playwright/test';
 
+import * as dotenv from 'dotenv'
 
-const validEmail = 'stracke.ali@example.net';
-const validPassword = 'password';
+dotenv.config()
+
+// Create and export the test instance
+export const test = base;
+export { expect };
 
 // SETUP AND TEARDOWN
+test.beforeEach(async ({ page }) => {
+  await page.waitForLoadState(); // The promise resolves after 'load' event.
 
-// test.beforeAll(async ({ page }) => {
-  //   console.log('Running setUp hook');
-  //   await page.goto('http://127.0.0.1:8000');
-  //   await assertUrl(page, 'login');
+  await page.goto(process.env.BASE_URL || 'defaulturl.com'); 
 
-  // });
-  
-  test.beforeEach(async ({ page }) => {
-    await page.goto('http://127.0.0.1:8000');
-    await assertUrl(page, 'login');
-  });
-  
-  test.afterAll(async ({ page }) => {
-    console.log('Running tearDown hook');
-    await page.close();
-  });
+  await assertUrl(page, 'login');
+});
 
 
-    export async function logIn(page: Page, email?: string, password?: string, remember?: string) {
-    const userEmail = email ?? 'stracke.ali@example.net';  // Default email if not provided
-    const userPassword = password ?? 'password';          // Default password 
+// Helper functions
+export async function logIn(page: Page, email?: string, password?: string, remember?: string) {
+  const userEmail = email ?? process.env.USERNAME ?? 'sampleemail@gmail.com';  
+  const userPassword = password ?? process.env.PASSWORD ?? 'samplePassword';
 
-    await page.getByPlaceholder('Email').fill(userEmail);
-    await page.getByPlaceholder('Password').fill(userPassword);
+  await page.getByPlaceholder('Email').fill(userEmail);
+  await page.getByPlaceholder('Password').fill(userPassword);
 
-    if (remember == 'yes') {
-      await page.locator('.icheck-primary input').check();
-    }
-    
-    await page.getByRole('button', { name: 'Sign In' }).click();
-    
-    try {
-      await assertUrl(page, 'product');
-    } catch (error) {
-      console.log('Error: ', error);
-    }
+  if (remember == 'yes') {
+    await page.locator('.icheck-primary input').check();
   }
-
-  export async function assertUrl(page: Page, urlEnd: string) {
-    const expUrl = `http://127.0.0.1:8000/${urlEnd}`;
-    await expect(page).toHaveURL(expUrl); 
-  }
-
   
+  await page.getByRole('button', { name: 'Sign In' }).click();
+  
+}
 
-export { expect, test} from '@playwright/test';
-export {validEmail, validPassword};
+export async function assertUrl(page: Page, urlEnd: string) {
+  const expUrl = `http://127.0.0.1:8000/${urlEnd}`;
+  await expect(page).toHaveURL(expUrl); 
+}
+
+// import { expect, test as base } from '@playwright/test';
+// import type { Page, Locator } from '@playwright/test';
+// import * as dotenv from 'dotenv'
+
+// dotenv.config()
+
+
+// // SETUP AND TEARDOWN
+
+//   base.beforeEach(async ({ page }) => {
+
+//     await page.goto(process.env.BASE_URL || 'defaulturl.com'); 
+
+//     await assertUrl(page, 'login');
+  
+//   });
+
+
+//     export async function logIn(page: Page, email?: string, password?: string, remember?: string) {
+    
+//     const userEmail = email ?? process.env.USERNAME ?? 'sampleemail@gmail.com';  
+//     const userPassword = password ?? process.env.PASSWORD ?? 'samplePassword';
+
+//     await page.getByPlaceholder('Email').fill(userEmail);
+//     await page.getByPlaceholder('Password').fill(userPassword);
+
+//     if (remember == 'yes') {
+//       await page.locator('.icheck-primary input').check();
+//     }
+    
+//     await page.getByRole('button', { name: 'Sign In' }).click();
+    
+//     try {
+//       await assertUrl(page, 'product');
+//     } catch (error) {
+//       console.log('Login Fail: ', error);
+//     }
+//   }
+
+//   export async function assertUrl(page: Page, urlEnd: string) {
+//     const expUrl = `http://127.0.0.1:8000/${urlEnd}`;
+//     await expect(page).toHaveURL(expUrl); 
+//   }
+
+// // export { expect, test} from '@playwright/test';
 
   

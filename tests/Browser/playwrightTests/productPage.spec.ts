@@ -1,41 +1,52 @@
 //@ts-check
-import {validEmail, validPassword, assertUrl, logIn } from './baseTest';
-import { test, expect} from '@playwright/test';
+// import { assertUrl, logIn } from './baseTest';
+// import { test, expect} from '@playwright/test';
+import { assertUrl, logIn, test, expect } from './baseTest';
 
 
-test("Products Page Navigation", async ({ page }) => {
-    console.log('Products Page Navigation');
-    
-    await logIn(page);
-    await assertElementsVisibility(page);
-});
+
+test.describe('ProductsPageTests', () => {
+    test.describe.configure({ mode: 'serial' });
 
 
-test("Navigate through pages using sidebuttons", async ({ page }) => {
-    console.log('Products Page Navigation');
-    
-    await logIn(page);
-    await assertElementsVisibility(page);
+    test("Products Page Navigation", async ({ page }) => {
 
-    const sideBarbuttons = page.locator('.sidebar nav ul li.nav-item ');
-    
-    // await expect(page.getByText('Product Create')).toBeVisible;
-    
-    await page.getByRole('link', { name: ' List' }).click();
-    await assertUrl(page, 'product');
-    await expect(page.getByRole('heading', { name: 'Products' })).toBeVisible;
-    
-    await page.getByRole('link', { name: ' Create' }).click();
-    await assertUrl(page, 'product/form');
-    await expect(page.getByText('Product Create')).toBeVisible;
-    
-    await page.getByRole('link', { name: ' Videos' }).click();
-    await assertUrl(page, 'videos');
-    await expect(page.locator('video')).toBeVisible
-    
-    await page.getByRole('link', { name: ' Logout' }).click();
-    await assertUrl(page, 'login');
-    await expect(page.locator('.card-body.login-card-body')).toBeVisible();
+        console.log('Products Page Navigation');
+        
+        await logIn(page);
+
+        await assertElementsVisibility(page);
+    });
+
+
+    test("Navigate through pages using side buttons", async ({ page }) => {
+        
+        console.log('Navigation through side buttons');
+        
+        await logIn(page);
+        await assertElementsVisibility(page);
+
+        const sideBarbuttons = page.locator('.sidebar nav ul li.nav-item ');
+        
+        // await expect(page.getByText('Product Create')).toBeVisible;
+        
+        await page.getByRole('link', { name: ' List' }).click();
+        await assertUrl(page, 'product');
+        await expect(page.getByRole('heading', { name: 'Products' })).toBeVisible;
+        
+        await page.getByRole('link', { name: ' Create' }).click();
+        await assertUrl(page, 'product/form');
+        await expect(page.getByText('Product Create')).toBeVisible;
+        
+        await page.getByRole('link', { name: ' Videos' }).click();
+        await assertUrl(page, 'videos');
+        await expect(page.locator('video')).toBeVisible
+        
+        await page.getByRole('link', { name: ' Logout' }).click();
+        await assertUrl(page, 'login');
+        await expect(page.locator('.card-body.login-card-body')).toBeVisible();
+    });
+
 });
 
 
