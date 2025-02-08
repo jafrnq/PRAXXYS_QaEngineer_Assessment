@@ -1,3 +1,13 @@
+# PRAXXYS QA Engineer Assessment
+
+This project is a Laravel Dusk and Playwright based automation project made for ui and functional testing for PRAXXYS's Qa Engineer assessment exam. This features a comprehensive test coverage on the mock website with test report and cross-browser testing capabilities. The test validates various scenarios such as page navigation and product creation. 
+
+Key Features
+- Cross browser testing (Chrome, Edge, Webkit)
+- Implemented Page object model, fixture, and assertions using both testing tools
+- User flow focused test scripts using Laravel Dusk
+
+
 ### System Specifications
 
 | Requirements | Versions |
@@ -7,6 +17,31 @@
 |    MYSQL     | ^10.4.25 |
 |  PLAYWRIGHT  | ^1.50.1  |
 |  LARAVEL DUSK  |  ^7.0  |
+
+## Project Structure
+
+```plaintext
+PRAXXYS_QaEngineer_Assessment
+├── tests/
+│   ├── Browser/
+│        ├── duskTests/
+│        |   ├── BaseTest.php
+│        |   ├── CreateProductTest.php
+│        |   ├── LoginTest.php
+│        |   ├── NavigationTest.php
+│        |  
+│        ├── playwrightTests/
+│            ├── baseTest.ts
+│            ├── createProduct.spec.ts
+│            ├── loginPage.spec.ts
+│            ├── productPage.spec.ts
+│
+├── playwright.config.js
+```
+
+- **duskTests**: Contains tests using `Laravel Dusk`.
+- **playwrightTests**: Contains tests using `Playwright`.
+- **playwright.config.js**: Contains playwright configurations and testng.xml.
 
 ## Configuration
 
