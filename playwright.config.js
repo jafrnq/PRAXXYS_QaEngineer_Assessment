@@ -91,6 +91,12 @@ export default defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
 
-//Naliligo ako tangina mo imy pau bili lang pagkain sa baba
+  // webServer: {
+  //   command: 'npm run start:test', // Start both frontend and backend
+  //   url: 'http://127.0.0.1:8000', // Make sure this matches your baseURL
+  //   timeout: 120000, // Wait up to 2 minutes for the server to start
+  //   reuseExistingServer: !process.env.CI,
+  // },
+  
+});
