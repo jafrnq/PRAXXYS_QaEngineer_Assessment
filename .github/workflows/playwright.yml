@@ -1,5 +1,6 @@
 name: Run playwright tests
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 * * * *'  # Runs at minute 0 of every hour
   push:
