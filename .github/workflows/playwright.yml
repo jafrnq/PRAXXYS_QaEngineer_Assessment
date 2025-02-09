@@ -27,9 +27,9 @@ jobs:
 
     - name: Start Frontend & Backend
       run: |
-        npm run dev &         # Start frontend
-        php artisan serve &   # Start backend
-        sleep 10              # Wait for servers to start
+        npm run dev &         # Frontend
+        php artisan serve &   # Backend
+        sleep 10              # Wait for servers
     
     - name: Run Playwright tests
       run: npx playwright test --workers=5 --parallel=false
