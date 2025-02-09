@@ -32,7 +32,7 @@ jobs:
         sleep 10              # Wait for servers
     
     - name: Run Playwright tests
-      run: npx playwright test --workers=5 --parallel=false
+      run: npx playwright test --workers=5
     
     - uses: actions/upload-artifact@v4
       if: always()
