@@ -1,6 +1,6 @@
 // import { assertUrl, logIn } from './baseTest';
 // import { test, expect} from '@playwright/test';
-import { assertUrl, logIn, test, expect } from './baseTest';
+import { assertUrl, logIn, logOut, test, expect } from './baseTest';
 
 
 test.describe('CreateProductTests', () => {
@@ -57,8 +57,9 @@ test.describe('CreateProductTests', () => {
         await expect(page.getByRole('dialog', { name: 'Successfully Saved!' })).toBeVisible;
         await page.getByRole('button', { name: 'OK' }).click();
         console.log('Product successfully created');
-        
-        //Cannot assert if item is visible in the list as the list page is broken
+
+
+        // await logOut(page);
     });
 
     test("Creating product with missing inputs in step 1", async ({ page }) => {
@@ -83,6 +84,8 @@ test.describe('CreateProductTests', () => {
         await expect(page.getByText('Name is required.')).toBeVisible
         await expect(page.getByText('Category is required.')).toBeVisible
         await expect(page.getByText('Description is required.')).toBeVisible
+
+        // await logOut(page);
     });
 
 });

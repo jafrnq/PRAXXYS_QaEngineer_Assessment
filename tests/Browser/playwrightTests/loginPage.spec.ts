@@ -1,14 +1,12 @@
 //@ts-check
 // import { assertUrl, logIn } from './baseTest';
 // import { test, expect} from '@playwright/test';
-import { assertUrl, logIn, test, expect } from './baseTest';
+import { assertUrl, logIn,logOut , test, expect } from './baseTest';
 
 
 
 test.describe('LoginPageTests', () => {
     test.describe.configure({ mode: 'serial' });
-
-
     
     test("Login using valid credentials", async ({ page }) => {
 
@@ -20,13 +18,15 @@ test.describe('LoginPageTests', () => {
 
         await assertUrl(page, 'product');
 
-        // await page.locator('.sidebar .mt-2 ul li.nav-item:nth-of-type(7) a').click; //Click logout button
+        // await logOut(page); 
     });
 
     test("Login using invalid credentials", async ({ page }) => {
         await assertElementsVisibility(page);
         
         await logIn(page, 'test123!@#@gmail.com', 'password123', 'no');
+
+        await assertLoginErrorMessage;
 
         await assertUrl(page, 'login');
 
@@ -37,14 +37,16 @@ test.describe('LoginPageTests', () => {
 
         await logIn(page, '', '', 'no');
 
-        // await assertUrl(page, 'login');
+        await assertLoginErrorMessage;
+
+        await assertUrl(page, 'login'); 
 
     });
 
     test("Test login with 'Remember me' on ", async ({ page }) => {
         
         await assertElementsVisibility(page);
-        await logIn(page, 'yes');
+        await logIn(page,undefined,undefined, 'yes');
 
         //refresh page and assert 
 
@@ -54,14 +56,15 @@ test.describe('LoginPageTests', () => {
         try{
             await assertUrl(page, 'product');
         } catch(error){
-            console.log("Error: " + error);
+            console.log("Login Error: still in login page " + error);
         }
+        // await logOut(page);
     });
 
     test("Test login with 'Remember me' off ", async ({ page }) => {
         
         await assertElementsVisibility(page);
-        await logIn(page, 'no');
+        await logIn(page,undefined,undefined, 'no');
 
         //refresh page and assert 
 
@@ -71,7 +74,8 @@ test.describe('LoginPageTests', () => {
         try{
             await assertUrl(page, 'login');
         } catch(error){
-            console.log("Error: " + error);
+            console.log("Error: Still in product page when 'remember me' is off " + error);
+            // await logOut(page);
         }
 
     });
@@ -82,7 +86,7 @@ test.describe('LoginPageTests', () => {
 
 //Page specific HELPER METHODS
 async function assertElementsVisibility(page){
-    await expect(page.locator('.card-body.login-card-body')).toBeVisible();
+    await expect(page.locator('.login-card-body')).toBeVisible();
     
     await expect(page.getByPlaceholder('Email')).toBeVisible();
     await expect(page.getByPlaceholder('Password')).toBeVisible();
@@ -92,5 +96,9 @@ async function assertElementsVisibility(page){
     await expect(page.locator('.icheck-primary input')).toBeVisible();
     await expect(page.locator('.icheck-primary input')).toHaveAttribute('type', 'checkbox');
     await expect(page.locator('.icheck-primary label')).toHaveText('Remember Me');
-    
+}
+
+async function assertLoginErrorMessage(page){
+    await expect(page.getByText('The email field is required.')).toBeVisible
+    await expect(page.getByText('The password field is required.')).toBeVisible
 }

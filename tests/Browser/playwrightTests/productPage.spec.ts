@@ -1,9 +1,6 @@
 //@ts-check
-// import { assertUrl, logIn } from './baseTest';
-// import { test, expect} from '@playwright/test';
-import { assertUrl, logIn, test, expect } from './baseTest';
 
-
+import { assertUrl, logIn, logOut, test, expect } from './baseTest';
 
 test.describe('ProductsPageTests', () => {
     test.describe.configure({ mode: 'serial' });
@@ -16,6 +13,8 @@ test.describe('ProductsPageTests', () => {
         await logIn(page);
 
         await assertElementsVisibility(page);
+
+        // await logOut(page);
     });
 
 
@@ -23,7 +22,8 @@ test.describe('ProductsPageTests', () => {
         
         console.log('Navigation through side buttons');
         
-        await logIn(page);
+        await logIn(page, undefined, undefined, 'no');
+
         await assertElementsVisibility(page);
 
         const sideBarbuttons = page.locator('.sidebar nav ul li.nav-item ');
@@ -45,7 +45,10 @@ test.describe('ProductsPageTests', () => {
         await page.getByRole('link', { name: ' Logout' }).click();
         await assertUrl(page, 'login');
         await expect(page.locator('.card-body.login-card-body')).toBeVisible();
+
+        // await logOut(page);
     });
+
 
 });
 
