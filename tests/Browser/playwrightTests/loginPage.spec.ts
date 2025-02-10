@@ -32,6 +32,19 @@ test.describe('LoginPageTests', () => {
 
     });
 
+    test("Login using with one incorrect credential", async ({ page }) => {
+        await assertElementsVisibility(page);
+        
+        //correct email with incorrect password
+        await logIn(page, undefined, 'password123', 'no');
+
+        await assertLoginErrorMessage;
+
+        await assertUrl(page, 'login');
+
+    });
+
+
     test("Login using empty fields", async ({ page }) => {
         await assertElementsVisibility(page);
 

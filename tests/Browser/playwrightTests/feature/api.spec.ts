@@ -1,5 +1,5 @@
 import { test, expect, request } from '@playwright/test';
-import { logIn } from './baseTest';
+import { logIn } from '../baseTest';
 
 // test.afterAll(async ({ page }) => {
 //     page.close();
