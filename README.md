@@ -37,12 +37,14 @@ PRAXXYS_QaEngineer_Assessment
 │            ├── loginPage.spec.ts
 │            ├── productPage.spec.ts
 │
+├── phpunit.xml
 ├── playwright.config.js
 ```
 
 - **duskTests**: Contains tests using `Laravel Dusk`.
 - **playwrightTests**: Contains tests using `Playwright`.
-- **playwright.config.js**: Contains playwright configurations and testng.xml.
+- **playwright.config.js**: Contains playwright configurations.
+- **testng.xml**: Contains dusk configurations.
 
 ## Configuration
 
